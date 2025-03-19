@@ -6,6 +6,6 @@ test('has image screenshot', async ({ page }) => {
 
   const imgLocator = page.getByAltText('Browsers (Chromium, Firefox, WebKit)');
   await expect(imgLocator).toBeVisible();
-  // await expect(imgLocator).toHaveScreenshot();
+  await expect(imgLocator).toHaveScreenshot();
 });
 

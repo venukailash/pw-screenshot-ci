@@ -1,4 +1,4 @@
-name: Playwright Tests
+name: Playwright Tests - Screenshot on CI
 on:
   push:
     branches: [ main, master ]
@@ -19,6 +19,25 @@ jobs:
       run: npx playwright install --with-deps
     - name: Run Playwright tests
       run: npx playwright test
+    - name: Check for new/changed screenshots
+      id: check-screenshots
+      run: |
+        git remote remove origin || true
+        git branch -D $GITHUB_REF_NAME-update-snapshots || true
+        git add tests/**/*.png
+        echo "SCREENSHOTS=$(git diff --name-only --cached)" >> $GITHUB_OUTPUT
+    - name: Create Pull Request
+      id: cpr
+      uses: peter-evans/create-pull-request@v7
+      if: ${{ steps.check-screenshots.outputs.SCREENSHOTS}}
+      with:
+        commit-message: Updated screenshots for CI environment
+        title: 'Screenshots for CI environment'
+        branch: $GITHUB_REF_NAME-update-snapshots
+        body: 'Screenshots for CI environment'
+    - name: Fail workflow if PR is created
+      if: ${{ steps.check-screenshots.outputs.SCREENSHOTS}}
+      run: exit 1
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
