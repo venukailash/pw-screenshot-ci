@@ -5,6 +5,7 @@ test('has image screenshot', async ({ page }) => {
   await expect(page).toHaveTitle(/Playwright/);
 
   const imgLocator = page.getByAltText('Browsers (Chromium, Firefox, WebKit)');
+
   await expect(imgLocator).toBeVisible();
   await expect(imgLocator).toHaveScreenshot();
 });

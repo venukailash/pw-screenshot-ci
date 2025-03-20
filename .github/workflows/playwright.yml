@@ -11,11 +11,11 @@ jobs:
     - uses: actions/setup-node@v4
       with:
         node-version: lts/*
-    - name: Install dependencies
-      run: npm ci
-    - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
-    - name: Run Playwright tests
+    - name: Setup
+      run: |
+        npm ci
+        npx playwright install --with-deps
+    - name: Test
       run: npx playwright test
     - name: Create Pull Request
       id: cpr
@@ -27,6 +27,9 @@ jobs:
         title: 'Screenshots for CI environment'
         branch: update-snapshots
         body: 'Screenshots for CI environment'
+    - name: Fail on missing or changed screenshots
+      if : ${{ steps.cpr.outputs.pull-request-number }}
+      run: exit 1
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
