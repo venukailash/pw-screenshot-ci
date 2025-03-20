@@ -23,11 +23,11 @@ jobs:
       with:
         add-paths: |
           tests/**/*.png
-        commit-message: Updated screenshots for CI environment
-        title: 'Screenshots for CI environment'
+        commit-message: Updated snapshots for CI environment
+        title: 'Snapshots for CI environment'
         branch: update-snapshots
-        body: 'Screenshots for CI environment'
-    - name: Fail on missing or changed screenshots
+        body: 'Snapshots for CI environment'
+    - name: Fail on missing or changed snapshots
       if : ${{ steps.cpr.outputs.pull-request-number }}
       run: exit 1
     - uses: actions/upload-artifact@v4
