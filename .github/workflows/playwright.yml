@@ -25,7 +25,7 @@ jobs:
           tests/**/*.png
         commit-message: Updated screenshots for CI environment
         title: 'Screenshots for CI environment'
-        branch: $GITHUB_REF_NAME-update-snapshots
+        branch: update-snapshots
         body: 'Screenshots for CI environment'
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
