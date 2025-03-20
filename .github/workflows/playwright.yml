@@ -23,9 +23,9 @@ jobs:
         git remote remove origin || true
         git branch -D $GITHUB_REF_NAME-update-snapshots || true
         git add tests/**/*.png
-        echo "SCREENSHOTS<<$EOF" >> $GITHUB_OUTPUT
+        echo "SCREENSHOTS<<EOF" >> $GITHUB_OUTPUT
         echo "$(git diff --name-only --cached)" >> $GITHUB_OUTPUT
-        echo "$EOF" >> $GITHUB_OUTPUT
+        echo "EOF" >> $GITHUB_OUTPUT
     - name: Create Pull Request
       id: cpr
       uses: peter-evans/create-pull-request@v7
